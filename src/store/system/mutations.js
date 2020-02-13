@@ -33,3 +33,11 @@ export function
 addWarnLog(state, payload) {
   insertLog(state, { content: payload, type: 3 });
 }
+
+/** **************************** */
+
+// 设置目标的ID
+export function
+setDestId(state, id) {
+  state.settings.destId = id;
+}
