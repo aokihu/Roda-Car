@@ -7,6 +7,11 @@ export default ({ Vue, store }) => {
     const { peerId, destId } = store.state.system.settings;
     const peer = new Peer();
 
+    // 保证Peer的唯一性
+    if (Vue.prototype.$peer) {
+      Vue.prototype.$peer.destroy();
+    }
+
     // 解析收到的数据
     const functionMaps = {
       start_video() {
@@ -45,7 +50,7 @@ export default ({ Vue, store }) => {
 
     peer.on('error', () => {
       store.commit('system/addFailLog', 'P2P Error');
-      Vue.prototype.$pper.destory();
+      Vue.prototype.$peer.destroy();
       Vue.prototype.$peer = Vue.prototype.$createPeer();
     });
 
