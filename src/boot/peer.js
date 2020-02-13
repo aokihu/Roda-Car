@@ -23,7 +23,6 @@ export default ({ Vue, store }) => {
 
     function parseData(rawData) {
       const { type, payload } = JSON.parse(rawData);
-      console.log('parse data', type, payload);
 
       if (functionMaps[type]) {
         functionMaps[type](payload);
@@ -46,6 +45,7 @@ export default ({ Vue, store }) => {
 
     peer.on('error', () => {
       store.commit('system/addFailLog', 'P2P Error');
+      Vue.prototype.$pper.destory();
       Vue.prototype.$peer = Vue.prototype.$createPeer();
     });
 

@@ -5,9 +5,9 @@ function insertLog(state, payload) {
   state.log.index = index + 1;
 
   if (state.log.list.length > 50) {
-    state.log.list.unshift();
+    state.log.list.pop();
   }
-  state.log.list.push(log);
+  state.log.list.unshift(log);
 }
 
 // 添加Log日志消息
