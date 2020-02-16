@@ -4,6 +4,9 @@ export default {
     destId: '',
     type: 'device',
   },
+  p2p: {
+    isConnected: false,
+  },
   log: {
     index: 0,
     list: [],

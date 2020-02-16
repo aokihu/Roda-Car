@@ -41,3 +41,10 @@ export function
 setDestId(state, id) {
   state.settings.destId = id;
 }
+
+
+// P2P连接
+export function p2pConnected(state) { state.p2p.isConnected = true; }
+
+// P2P断开连接
+export function p2pDisconnected(state) { state.p2p.isConnected = false; }

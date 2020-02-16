@@ -31,7 +31,9 @@
 <script>
 import LogPanel from 'src/components/logPanel';
 import { matSettings } from '@quasar/extras/material-icons';
+import BusMixin from 'src/mixins/bus.mixin';
 import SocketMixin from 'src/mixins/socket.mixin';
+import BackcoreMixin from 'src/mixins/backcore.mixin';
 import DataMixin from 'src/mixins/data.mixin';
 import PeerMixin from 'src/mixins/peer.mixin';
 
@@ -41,7 +43,7 @@ export default {
   components: {
     LogPanel,
   },
-  mixins: [DataMixin, SocketMixin, PeerMixin],
+  mixins: [BusMixin, DataMixin, SocketMixin, PeerMixin, BackcoreMixin],
 
   data() {
     return {

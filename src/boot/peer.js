@@ -1,8 +1,9 @@
 import Peer from 'simple-peer';
 
 export default ({ Vue, store }) => {
-  const { $socket } = Vue.prototype;
+  const { $socket, $bus } = Vue.prototype;
 
+  // 创建P2P连接
   Vue.prototype.$createPeer = () => {
     const { peerId, destId } = store.state.system.settings;
     const peer = new Peer();
@@ -23,6 +24,9 @@ export default ({ Vue, store }) => {
           (err) => {
             store.commit('system/addFailLog', `Get media stream fail ${err}`);
           });
+      },
+      motion_update(payload) {
+        $bus.emit('p2p_motion_update', payload);
       },
     };
 
@@ -45,11 +49,13 @@ export default ({ Vue, store }) => {
 
     peer.on('connect', () => {
       store.commit('system/addSuccessLog', 'P2P connected');
+      store.commit('system/p2pConnected');
       peer.send('hello');
     });
 
     peer.on('error', () => {
       store.commit('system/addFailLog', 'P2P Error');
+      store.commit('system/p2pDisconnected');
       Vue.prototype.$peer.destroy();
       Vue.prototype.$peer = Vue.prototype.$createPeer();
     });
@@ -64,5 +70,16 @@ export default ({ Vue, store }) => {
     Vue.prototype.$peer = peer;
 
     return peer;
+  };
+
+  // P2P发送消息
+  Vue.prototype.$peerSendData = (type, payload) => {
+    const data = { type, payload };
+    const { isConnected } = store.state.system.p2p;
+
+    if (Vue.prototype.$peer && isConnected) {
+      Vue.prototype.$peer.send(JSON.stringify(data));
+      store.commit('system/addLog', `SEND '${type}' with '${JSON.stringify(payload)}'`);
+    }
   };
 };
