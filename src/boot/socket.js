@@ -11,7 +11,7 @@ export default ({ Vue }) => {
   Vue.prototype.$socket = client;
 
   // 连接设备的后端控制核心
-  const backcoreClient = Client('ws://192.168.3.254:8031', options);
+  const backcoreClient = Client('ws://127.0.0.1:8031', options);
   Vue.prototype.$bcSocket = backcoreClient;
 
   Vue.prototype.$bcSocketSendCmd = (type, payload) => {
