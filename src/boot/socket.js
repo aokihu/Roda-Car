@@ -1,13 +1,14 @@
 import Client from 'socket.io-client';
 
 const options = {
-  forceNew: true,
-  transports: ['websocket'],
+  // forceNew: true,
+  path: '/io',
+  transports: ['websocket', 'polling'],
   autoConnect: false, // 默认不自动连接
 };
 
 export default ({ Vue }) => {
-  const client = Client('ws://192.168.3.254:3000', options);
+  const client = Client('https://roda.appbox.top', options);
   Vue.prototype.$socket = client;
 
   // 连接设备的后端控制核心
