@@ -23,7 +23,7 @@ export default ({ Vue, store }) => {
             height: { min: 240, ideal: 480, max: 480 },
             frameRate: { ideal: 10, max: 16 },
           },
-          audio: true,
+          audio: false,
         },
         (stream) => {
           peer.addStream(stream);
