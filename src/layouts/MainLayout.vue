@@ -1,17 +1,5 @@
 <template>
   <q-layout>
-    <q-header elevated>
-      <q-toolbar>
-
-        <q-toolbar-title>
-          RoBot Car
-        </q-toolbar-title>
-
-        <div>
-          <q-btn :icon="settingIcon" label="Setting" flat />
-        </div>
-      </q-toolbar>
-    </q-header>
 
     <q-drawer v-model="logShow"
         side="right"

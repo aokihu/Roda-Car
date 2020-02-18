@@ -17,13 +17,20 @@ export default ({ Vue, store }) => {
     const functionMaps = {
       start_video() {
         // Try video stream
-        navigator.getUserMedia({ video: true, audio: false },
-          (stream) => {
-            peer.addStream(stream);
+        navigator.getUserMedia({
+          video: {
+            width: { min: 320, ideal: 640, max: 640 },
+            height: { min: 240, ideal: 480, max: 480 },
+            frameRate: { ideal: 10, max: 16 },
           },
-          (err) => {
-            store.commit('system/addFailLog', `Get media stream fail ${err}`);
-          });
+          audio: true,
+        },
+        (stream) => {
+          peer.addStream(stream);
+        },
+        (err) => {
+          store.commit('system/addFailLog', `Get media stream fail ${err}`);
+        });
       },
       motion_update(payload) {
         $bus.emit('p2p_motion_update', payload);

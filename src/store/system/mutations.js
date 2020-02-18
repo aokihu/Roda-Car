@@ -34,6 +34,22 @@ addWarnLog(state, payload) {
   insertLog(state, { content: payload, type: 3 });
 }
 
+/** ***************************** */
+
+export function addDevClickCount(state) {
+  const { devmode: { clickCount } } = state;
+  if (clickCount < 5) { state.devmode.clickCount += 1; }
+}
+
+export function clearDevClickCount(state) {
+  state.devmode.clickCount = 0;
+  state.devmode.enable = false;
+}
+
+export function enableDevMode(state) {
+  state.devmode.enable = true;
+}
+
 /** **************************** */
 
 // 设置目标的ID
