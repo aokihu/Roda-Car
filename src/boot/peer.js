@@ -21,7 +21,7 @@ export default ({ Vue, store }) => {
           video: {
             width: { min: 320, ideal: 640, max: 640 },
             height: { min: 240, ideal: 480, max: 480 },
-            frameRate: { ideal: 10, max: 16 },
+            frameRate: { ideal: 24, max: 60 },
           },
           audio: false,
         },
