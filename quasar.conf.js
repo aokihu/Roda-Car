@@ -173,9 +173,6 @@ module.exports = function (ctx) {
         appId: 'top.appbbox.roda.robot',
         productName: 'Roda Robot',
         copyright: 'Copyright aokihu',
-        electronDownload: {
-          version: '8.0.0',
-        },
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
