@@ -170,18 +170,11 @@ module.exports = function (ctx) {
 
       builder: {
         // https://www.electron.build/configuration/configuration
-
         appId: 'top.appbbox.roda.robot',
-        produceName: 'Roda Robot',
+        productName: 'Roda Robot',
         copyright: 'Copyright aokihu',
         electronDownload: {
-          version: '8.0.1',
-          platform: 'linux',
-        },
-        linux: {
-          target: 'AppImage',
-          maintainer: 'aokihu',
-          vendor: 'aokihu',
+          version: '8.0.0',
         },
       },
 
