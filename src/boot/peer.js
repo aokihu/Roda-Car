@@ -6,7 +6,7 @@ export default ({ Vue, store }) => {
   // 创建P2P连接
   Vue.prototype.$createPeer = () => {
     const { peerId, destId } = store.state.system.settings;
-    const peer = new Peer();
+    const peer = new Peer({ initiator: true });
 
     // 保证Peer的唯一性
     if (Vue.prototype.$peer) {
@@ -46,6 +46,7 @@ export default ({ Vue, store }) => {
     }
 
     peer.on('signal', (data) => {
+      console.log(data);
       store.commit('system/addLog', 'Receive peer signal');
       $socket.emit('call', {
         fromId: peerId,
