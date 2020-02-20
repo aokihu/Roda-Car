@@ -264,7 +264,8 @@ export default ({ Vue, store }) => {
     const peer = new Peer({
       initiator: true,
       config: {
-        iceServers: [{ urls: STUN_SERVERS }],
+        iceServers: [{ urls: STUN_SERVERS },
+          { urls: 'turn:numb.viagenie.ca', username: 'aokihu@gmail.com', credential: 'abcd1234' }],
       },
     });
 
