@@ -5,13 +5,19 @@ export default ({ Vue, store }) => {
 
   // 创建P2P连接
   Vue.prototype.$createPeer = () => {
+    // 保证Peer的唯一性
+    if (Vue.prototype.$peer) {
+      Vue.prototype.$peer.destroy();
+    }
+
     const { peerId, destId } = store.state.system.settings;
+
     const peer = new Peer({
-      initiator: true,
       config: {
         iceServers: [
           {
-            urls: ['stun:stun.appbox.top', 'turn:turn.appbox.top'],
+            // urls: ['stun:stun.appbox.top', 'turn:turn.appbox.top'],
+            urls: ['stun:stun.appbox.top'],
             username: 'aokihu',
             credential: 'abcd1234',
           },
@@ -19,10 +25,6 @@ export default ({ Vue, store }) => {
       },
     });
 
-    // 保证Peer的唯一性
-    if (Vue.prototype.$peer) {
-      Vue.prototype.$peer.destroy();
-    }
 
     // 解析收到的数据
     const functionMaps = {
@@ -32,7 +34,7 @@ export default ({ Vue, store }) => {
           video: {
             width: { min: 320, ideal: 320, max: 640 },
             height: { min: 240, ideal: 240, max: 480 },
-            frameRate: { ideal: 30, max: 60 },
+            frameRate: { ideal: 24, max: 60 },
           },
           audio: false,
         },
