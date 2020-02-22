@@ -16,8 +16,8 @@ export default ({ Vue, store }) => {
       config: {
         iceServers: [
           {
-            // urls: ['stun:stun.appbox.top', 'turn:turn.appbox.top'],
-            urls: ['stun:stun.appbox.top'],
+            urls: ['st un:stun.appbox.top', 'turn:turn.appbox.top'],
+            // urls: ['stun:stun.appbox.top'],
             username: 'aokihu',
             credential: 'abcd1234',
           },
