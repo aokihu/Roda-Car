@@ -13,6 +13,10 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <div class="fixed-bottom-left q-ma-sm text-grey-7">
+      ver: 0.1.0
+    </div>
   </q-layout>
 </template>
 
