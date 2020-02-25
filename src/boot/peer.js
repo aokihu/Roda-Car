@@ -15,6 +15,9 @@ export default ({ Vue, store }) => {
     const peer = new Peer({
       config: {
         chnnaelNaame: 'data-channel',
+        ordered: false,
+        maxPacketLifeTime: 0,
+        maxRetransmits: 1,
         iceServers: [
           {
             urls: ['stun:stun.appbox.top', 'turn:turn.appbox.top'],
