@@ -40,22 +40,40 @@ export default {
     });
 
     this.$socket.on('prepare_call', (data) => {
-      const { fromId } = data;
+      const { fromId, type: peerType } = data;
       this.$store.commit('system/addSuccessLog', `Call from (${fromId})`);
       this.$store.commit('system/setDestId', fromId);
 
-      // 发送call_ready事件给拨号者
-      this.$socket.emit('call_ready', { fromId: peerId, destId: fromId });
-      this.$store.commit('system/addSuccessLog', `Replay caller ${fromId}`);
+      switch (peerType) {
+        case 'data':
+        default:
+          this.$peerCreate();
+          break;
+        case 'media':
+          this.$mediaStreamPeerCreate();
+          break;
+      }
 
-      this.$createPeer();
+      // 发送call_ready事件给拨号者
+      this.$socket.emit('call_ready', { fromId: peerId, destId: fromId, type: peerType });
+      this.$store.commit('system/addSuccessLog', `Replay caller ${fromId}`);
     });
 
     this.$socket.on('answer', (data) => {
       this.$store.commit('system/addLog', 'Receive answer signal');
-      const { fromId, payload } = data;
+      const { fromId, payload, type: peerType } = data;
+
+      console.log('ANSWER TYPE', data);
       this.destId = fromId;
-      this.$peer.signal(JSON.parse(payload));
+      switch (peerType) {
+        case 'data':
+        default:
+          this.$peer.signal(JSON.parse(payload));
+          break;
+        case 'media':
+          this.$mediaStreamPeer.signal(JSON.parse(payload));
+          break;
+      }
     });
 
 
