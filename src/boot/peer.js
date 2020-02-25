@@ -34,7 +34,7 @@ export default ({ Vue, store }) => {
           video: {
             width: { min: 320, ideal: 320, max: 640 },
             height: { min: 240, ideal: 240, max: 480 },
-            frameRate: { ideal: 24, max: 60 },
+            frameRate: { ideal: 30, max: 60 },
           },
           audio: true,
         },
