@@ -63,7 +63,6 @@ export default {
       this.$store.commit('system/addLog', 'Receive answer signal');
       const { fromId, payload, type: peerType } = data;
 
-      console.log('ANSWER TYPE', data);
       this.destId = fromId;
       switch (peerType) {
         case 'data':
