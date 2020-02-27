@@ -1,5 +1,16 @@
 import Peer from 'simple-peer';
 
+// 获取有效的音频和视频媒体设备
+async function getAvaliableInputDevices() {
+  // 检查设备支持哪些设备
+  const devices = await navigator.mediaDevices.enumerateDevices();
+
+  const audios = devices.filter(d => d.kind === 'audioinput');
+  const videos = devices.filter(d => d.kind === 'videoinput');
+
+  return { videos, audios };
+}
+
 export default ({ Vue, store }) => {
   const { $socket, $bus } = Vue.prototype;
 
@@ -82,6 +93,7 @@ export default ({ Vue, store }) => {
     return peer;
   };
 
+
   // 创建媒体流P2P连接
   Vue.prototype.$mediaStreamPeerCreate = () => {
     // 保证Peer的唯一性
@@ -115,23 +127,40 @@ export default ({ Vue, store }) => {
       });
     });
 
-    peer.on('connect', () => {
+    peer.on('connect', async () => {
       store.commit('system/addSuccessLog', 'P2P connected');
       store.commit('system/p2pConnected');
-      navigator.getUserMedia({
-        video: {
-          width: { min: 320, ideal: 320, max: 640 },
-          height: { min: 240, ideal: 240, max: 480 },
-          frameRate: { min: 24, ideal: 30, max: 60 },
-        },
-        audio: true,
-      },
-      (stream) => {
-        peer.addStream(stream);
-      },
-      (err) => {
-        store.commit('system/addFailLog', `Get media stream fail ${err}`);
-      });
+
+      const { audios, videos } = await getAvaliableInputDevices();
+
+      const constraints = { audio: false, video: false };
+
+      // 设置音频的约束
+      if (audios.length > 0) {
+        constraints.audio = {
+          deviceId: audios[0].deviceId,
+          channelCount: 1,
+          noiseSuppression: true, // 噪音消除
+          echoCancellation: true, // 回音消除
+        };
+      }
+
+      // 设置视频的约束
+      if (videos.length > 0) {
+        constraints.video = {
+          deviceId: videos[0].deviceId,
+          width: { min: 320, ideal: 640, max: 1280 },
+          height: { min: 240, ideal: 480, max: 1080 },
+          frameRate: { min: 10, ideal: 24, max: 60 },
+        };
+      }
+
+      // 获取媒体流
+      navigator.getUserMedia(constraints,
+        (stream) => { peer.addStream(stream); },
+        (err) => {
+          store.commit('system/addFailLog', `Get media stream fail ${err}`);
+        });
     });
 
     peer.on('error', () => {
