@@ -7,6 +7,7 @@ export default {
   devmode: { // 进入开发模式
     clickCount: 0, // 点击次数，连续点击5次进入开发模式
     enable: false, // 开发模式有效
+    logShowed: false, // 现实Log调试界面
   },
   p2p: {
     isConnected: false,

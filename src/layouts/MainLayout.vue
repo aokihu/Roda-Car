@@ -1,9 +1,7 @@
 <template>
   <q-layout>
-
     <q-drawer v-model="logShow"
         side="right"
-        show-if-above
         :width="300"
         :breakpoint="700"
         elevated>
@@ -15,7 +13,7 @@
     </q-page-container>
 
     <div class="fixed-bottom-left q-ma-sm text-grey-7">
-      ver: 0.2.0
+      ver: 1.0.0
     </div>
   </q-layout>
 </template>
@@ -39,9 +37,14 @@ export default {
 
   data() {
     return {
-      logShow: true,
       connectFlag: 'disconnect',
     };
+  },
+  computed: {
+    logShow: {
+      get() { return this.$store.state.system.devmode.logShowed; },
+      set() { this.$store.commit('system/toggleLogShoed'); },
+    },
   },
   created() {
     this.settingIcon = matSettings;

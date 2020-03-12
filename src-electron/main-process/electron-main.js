@@ -1,4 +1,6 @@
-import { app, BrowserWindow, nativeTheme } from 'electron';
+import {
+  app, BrowserWindow, nativeTheme, Remote,
+} from 'electron';
 
 try {
   if (process.platform === 'win32' && nativeTheme.shouldUseDarkColors === true) {

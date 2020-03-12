@@ -48,7 +48,12 @@ export function clearDevClickCount(state) {
 
 export function enableDevMode(state) {
   state.devmode.enable = true;
+  state.devmode.clickCount = 0;
 }
+
+export function disableDevMode(state) { state.devmode.enable = false; }
+export function setDevMode(state, mode) { state.devmode.enable = mode; }
+export function toggleLogShowed(state) { state.devmode.logShowed = !state.devmode.logShowed; }
 
 /** **************************** */
 
